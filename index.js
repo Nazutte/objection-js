@@ -1,6 +1,7 @@
 const dbSetup = require('./db/db-setup');
 const express = require('express');
 const User = require('./db/models/user');
+const Channel = require('./db/models/channel');
 const { tableName, relatedQuery } = require('./db/models/channel');
 const app = express();
 const PORT = 5000;
@@ -8,16 +9,23 @@ const PORT = 5000;
 dbSetup();
 
 async function run(){
+    // const id = 1;
+    // const user = await User.query().findById(id).select("name").withGraphFetched('channel(selectName)').modifiers({
+    //     selectName(builder){
+    //         builder.select('name');
+    //     }
+    // });
+
+    // console.log(user);
+
     const id = 1;
-    const user = await User.query().findById(id).select("name").withGraphFetched('channel(selectName)').modifiers({
-        selectName(builder){
-            builder.select('name');
+    const videos = await Channel.query().findById(id).select("name").withGraphFetched('video(selectTitle)').modifiers({
+        selectTitle(builder){
+            builder.select('title');
         }
     });
-    // // const username = await User.query().select("name", "channelId").where("id", id);
-    console.log(user);
 
-    // SELECT user.name, channel.name FROM user JOIN user.channelId, channel.id
+    console.log(videos);
 
     // const channel = await User.relatedQuery("channel").for(1).select("name");
     // console.log(channel);
