@@ -13,8 +13,8 @@ module.exports = {
     connection: {
       database: 'objection_tutorial',
       user:     'postgres',
-      password: 'password',
-      port: 5433,
+      password: 'postgres',
+      port: 5432,
       host: 'localhost'
     },
 

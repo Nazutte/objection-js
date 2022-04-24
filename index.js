@@ -9,12 +9,18 @@ dbSetup();
 
 async function run(){
     const id = 1;
-    //const user = await User.query().findById(id).withGraphFetched('channel');
-    //const username = await User.query().select("name", "channelId").where("id", id);
-    //console.log(username);
+    const user = await User.query().findById(id).select("name").withGraphFetched('channel(selectName)').modifiers({
+        selectName(builder){
+            builder.select('name');
+        }
+    });
+    // // const username = await User.query().select("name", "channelId").where("id", id);
+    console.log(user);
 
-    const channel = await User.relatedQuery("channel").for(1).where("name");
-    console.log(channel);
+    // SELECT user.name, channel.name FROM user JOIN user.channelId, channel.id
+
+    // const channel = await User.relatedQuery("channel").for(1).select("name");
+    // console.log(channel);
 }
 
 run();
